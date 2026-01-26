@@ -4,22 +4,20 @@ FROM golang:1.21-alpine
 # Set working directory
 WORKDIR /app
 
-# 1. Copy the module file
-COPY go.mod ./
+# Copy Go module files first (for caching)
+COPY go.mod go.sum ./
 
-# 2. This is the FIX for the errors in your screenshots
-# It downloads the dependencies and creates the checksums inside Docker
-RUN go mod tidy
+# Download dependencies INSIDE the container
 RUN go mod download
 
-# 3. Copy the rest of the source code
+# Copy the rest of the source code
 COPY . .
 
-# 4. Build the application
+# Build the application
 RUN go build -o main .
 
-# Expose port 8080
+# Expose application port
 EXPOSE 8080
 
-# Command to run the executable
+# Run the application
 CMD ["./main"]
