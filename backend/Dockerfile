@@ -4,13 +4,12 @@ FROM golang:1.21-alpine
 # Set working directory
 WORKDIR /app
 
-# 1. Copy the dependency files
+# 1. Copy the module file
 COPY go.mod ./
-# If you created a go.sum, copy it too; if not, the next step creates it
-COPY go.sum* ./ 
 
-# 2. DOWNLOAD dependencies inside the Docker image
-# This fixes the "missing go.sum" error in your images
+# 2. This is the FIX for the errors in your screenshots
+# It downloads the dependencies and creates the checksums inside Docker
+RUN go mod tidy
 RUN go mod download
 
 # 3. Copy the rest of the source code
