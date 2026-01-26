@@ -4,20 +4,22 @@ FROM golang:1.21-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy Go module files first (for caching)
-COPY go.mod go.sum ./
+# Copy the module files first
+COPY go.mod ./ 
+COPY go.sum* ./ 
 
-# Download dependencies INSIDE the container
+# Download dependencies inside Docker
+RUN go mod tidy
 RUN go mod download
 
 # Copy the rest of the source code
 COPY . .
 
-# Build the application
+# Build the Go application
 RUN go build -o main .
 
-# Expose application port
+# Expose port 8080
 EXPOSE 8080
 
-# Run the application
+# Run the executable
 CMD ["./main"]
