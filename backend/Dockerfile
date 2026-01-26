@@ -1,15 +1,15 @@
-# Use official Golang image
+# Use the official Golang image
 FROM golang:1.21-alpine
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# 1. Copy go.mod and go.sum first to leverage Docker caching
+# 1. Copy the module files first
 COPY go.mod ./
-# If you don't have a go.sum yet, Docker might complain, 
-# so we run tidy right after copying the mod file.
+# Note: We don't copy go.sum yet because it might be incomplete
 
-# 2. Download dependencies inside the container
+# 2. Force a 'tidy' and download inside the container
+# This is the "magic fix" for the error in your screenshots
 RUN go mod tidy
 RUN go mod download
 
@@ -19,8 +19,8 @@ COPY . .
 # 4. Build the application
 RUN go build -o main .
 
-# Expose port 8080
+# Expose the port
 EXPOSE 8080
 
-# Command to run the executable
+# Run the app
 CMD ["./main"]
