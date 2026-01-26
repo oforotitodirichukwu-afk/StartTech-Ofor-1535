@@ -4,15 +4,16 @@ FROM golang:1.21-alpine
 # Set working directory
 WORKDIR /app
 
-# 1. Copy only the module file first
+# 1. Copy the dependency files
 COPY go.mod ./
+# If you created a go.sum, copy it too; if not, the next step creates it
+COPY go.sum* ./ 
 
-# 2. This is the fix: Force tidy and download INSIDE the container
-# This generates the missing go.sum entries the error is complaining about
-RUN go mod tidy
+# 2. DOWNLOAD dependencies inside the Docker image
+# This fixes the "missing go.sum" error in your images
 RUN go mod download
 
-# 3. Now copy the rest of your source code
+# 3. Copy the rest of the source code
 COPY . .
 
 # 4. Build the application
