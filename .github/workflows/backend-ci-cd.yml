@@ -25,5 +25,5 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          # Using your username from the screenshot to ensure the tag is valid
+          # Hardcoded to bypass the empty DOCKER_USERNAME secret
           tags: princep260471/starttech-backend:latest
