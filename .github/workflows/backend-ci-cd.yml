@@ -25,5 +25,5 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          # Hardcoded to bypass the empty DOCKER_USERNAME secret
+          # Hardcoding the username to fix the 'invalid reference format' error
           tags: princep260471/starttech-backend:latest
