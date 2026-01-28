@@ -1,14 +1,14 @@
 FROM golang:1.21-alpine
 WORKDIR /app
 
-# Copy all files from the backend directory
+# Copy the backend source files
 COPY . .
 
-# Ensure dependencies are present
+# Download dependencies and tidy up
 RUN go mod download
 RUN go mod tidy
 
-# Build the application binary
+# Build the binary
 RUN go build -o main .
 
 EXPOSE 8080

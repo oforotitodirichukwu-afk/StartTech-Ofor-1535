@@ -25,5 +25,5 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          # Hardcoding the username to fix the 'invalid reference format' error
+          # Hardcoding the username 'princep260471' to fix the reference error
           tags: princep260471/starttech-backend:latest
