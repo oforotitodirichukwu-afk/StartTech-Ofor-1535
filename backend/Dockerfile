@@ -1,17 +1,14 @@
 FROM golang:1.21-alpine
 WORKDIR /app
 
-# Copy dependency files first for better caching
-COPY backend/go.mod ./
-# If you have a go.sum file, uncomment the next line
-# COPY backend/go.sum ./
+# Copy all files from the backend directory
+COPY . .
 
+# Ensure dependencies are present
 RUN go mod download
+RUN go mod tidy
 
-# Copy the rest of the source code
-COPY backend/ .
-
-# Build the application
+# Build the application binary
 RUN go build -o main .
 
 EXPOSE 8080
