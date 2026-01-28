@@ -19,10 +19,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Backend
+     - name: Build and Push Backend
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/starttech-backend:latest
+          # Replace 'YOUR_DOCKER_USERNAME' with your actual Docker Hub username string
+          tags: princep260471/starttech-backend:latest
